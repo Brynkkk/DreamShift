@@ -36,7 +36,7 @@ public class LobbyMusic : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMenu")
+        if (scene.name == "MainMenu" || scene.name == "Tutorial")
         {
             PlayLobbyMusic();
         }

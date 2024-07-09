@@ -8,6 +8,7 @@ TagManager:
   - Reality
   - Neutral
   - Obstacle
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

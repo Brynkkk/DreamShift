@@ -3,9 +3,9 @@ using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float playerSpeed = 5f; // Player speed, editable in the editor
-    public float gravityScale = 1f; // Gravity scale when flipping, editable in the editor
-    public float shakeMagnitude = 1f; // Screen shake magnitude, editable in the editor
+    public float playerSpeed = 5f; 
+    public float gravityScale = 1f; 
+    public float shakeMagnitude = 1f; 
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -19,13 +19,13 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        spawnPoint = transform.position; // Set initial spawn point as the checkpoint
+        spawnPoint = transform.position; 
         impulseSource = GameObject.Find("CameraShakeSource").GetComponent<CinemachineImpulseSource>();
-        dreamRealityToggle = FindObjectOfType<DreamRealityToggle>(); // Get the DreamRealityToggle script
+        dreamRealityToggle = FindObjectOfType<DreamRealityToggle>(); 
 
         rb.gravityScale = gravityScale;
-        rb.drag = 0; // Ensure no drag
-        rb.interpolation = RigidbodyInterpolation2D.None; // Ensure no interpolation
+        rb.drag = 0; 
+        rb.interpolation = RigidbodyInterpolation2D.None; 
     }
 
     void Update()
@@ -38,17 +38,16 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        float move = Input.GetAxis("Horizontal"); // Get input from A|D or arrow keys
+        float move = Input.GetAxis("Horizontal"); 
         if (move == 0)
         {
-            rb.velocity = new Vector2(0, rb.velocity.y); // Stop movement when no input
+            rb.velocity = new Vector2(0, rb.velocity.y); 
         }
         else
         {
-            rb.velocity = new Vector2(move * playerSpeed, rb.velocity.y); // Move the player
+            rb.velocity = new Vector2(move * playerSpeed, rb.velocity.y); 
         }
 
-        // Flip the player's sprite based on movement direction
         if (move > 0)
             transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         else if (move < 0)
@@ -57,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleGravityFlip()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // Check if space key is pressed
+        if (Input.GetKeyDown(KeyCode.Space)) 
         {
             isGravityFlipped = !isGravityFlipped; // Toggle gravity direction
             rb.gravityScale = isGravityFlipped ? -gravityScale : gravityScale; // Set gravity scale
@@ -69,9 +68,8 @@ public class PlayerController : MonoBehaviour
 
     void HandleDreamworldShift()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(0)) // Check if shift or left mouse button is pressed
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(0)) 
         {
-            impulseSource.GenerateImpulse(shakeMagnitude); // Trigger screen shake
             dreamRealityToggle.ToggleState(); // Toggle dream/reality state
         }
     }
@@ -80,24 +78,24 @@ public class PlayerController : MonoBehaviour
     {
         float move = Input.GetAxis("Horizontal");
         bool isWalking = Mathf.Abs(move) > 0.1f;
-        animator.SetBool("Walk", isWalking); // Set the Walk bool in the animator
+        animator.SetBool("Walk", isWalking); 
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Obstacle")) // Check if collided with an obstacle
+        if (other.CompareTag("Obstacle")) 
         {
             transform.position = spawnPoint; // Teleport back to the start
-            if (!dreamRealityToggle.IsInReality()) // Ensure the state is reality
+            if (!dreamRealityToggle.IsInReality()) 
             {
-                dreamRealityToggle.SetRealityState(); // Change to reality state
+                dreamRealityToggle.SetRealityState(); 
             }
         }
         else if (other.CompareTag("Ground"))
         {
-            isGrounded = true; // Set grounded state
+            isGrounded = true; 
         }
-        else if (other.CompareTag("Checkpoint")) // Check if collided with a checkpoint
+        else if (other.CompareTag("Checkpoint")) 
         {
             spawnPoint = other.transform.position; // Update spawn point
         }

@@ -3,34 +3,31 @@ using System.Collections.Generic;
 
 public class DreamRealityToggle : MonoBehaviour
 {
-    public KeyCode toggleKey = KeyCode.LeftShift; // Key to toggle dream/reality
-    public string dreamTag = "Dream"; // Tag for dream objects
-    public string realityTag = "Reality"; // Tag for reality objects
+    public KeyCode toggleKey = KeyCode.LeftShift; 
+    public string dreamTag = "Dream"; 
+    public string realityTag = "Reality"; 
 
-    private List<GameObject> dreamObjects; // List of all dream objects
-    private List<GameObject> realityObjects; // List of all reality objects
-    private bool isInReality = true; // Initial state is reality
+    private List<GameObject> dreamObjects; 
+    private List<GameObject> realityObjects; 
+    private bool isInReality = true; 
 
     void Start()
     {
-        // Initialize lists
         dreamObjects = new List<GameObject>();
         realityObjects = new List<GameObject>();
 
-        // Find all objects with the dream tag
         GameObject[] allDreamObjects = GameObject.FindGameObjectsWithTag(dreamTag);
         foreach (GameObject dreamObject in allDreamObjects)
         {
             dreamObjects.Add(dreamObject);
-            dreamObject.SetActive(false); // Hide dream objects initially
+            dreamObject.SetActive(false);
         }
 
-        // Find all objects with the reality tag
         GameObject[] allRealityObjects = GameObject.FindGameObjectsWithTag(realityTag);
         foreach (GameObject realityObject in allRealityObjects)
         {
             realityObjects.Add(realityObject);
-            realityObject.SetActive(true); // Show reality objects initially
+            realityObject.SetActive(true); 
         }
     }
 
@@ -45,7 +42,7 @@ public class DreamRealityToggle : MonoBehaviour
 
     public void ToggleState()
     {
-        isInReality = !isInReality; // Toggle the state
+        isInReality = !isInReality;
 
         // Enable or disable objects based on the current state
         if (isInReality)
